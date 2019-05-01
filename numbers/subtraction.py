@@ -3,18 +3,22 @@
 from general_test import GeneralTest
 
 class TestSubtraction(GeneralTest):
-    def handle_question(self,num1,num2):
-
-        print("{0}-{1}=".format(num1,num2),end='')
-
+    def handle_question(self,num1,num2,prefix=''):
+        
+        print("{0}{1}-{2}=".format(prefix,num1,num2),end='')
+        good_result = num1 - num2
+        your_result = 0
         try:
-            result = int(input())
-            if result == num1 - num2:
-                return True
+            text = input()
+            your_result = int(text)
+            if your_result == good_result:
+                return (True,your_result)
         except:
             pass
-        
-        return False
+
+        info_text = "{0}-{1}={2} not {3}".format(num1,num2,good_result,text)
+
+        return (False,info_text)
 
 
 def main():

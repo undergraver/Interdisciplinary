@@ -6,32 +6,40 @@ class GeneralTest():
         self.num_challenges = num_challenges
         self.max_value = max_value
 
-    def handle_question(self,num1,num2):
+    def handle_question(self,num1,num2,prefix=''):
         """
         This function handles the operation between num1 and num2.
-        
-        Return True if the answer is correct, False otherwise
+
+        Return a (True,value) tuple if the answer is correct, (False,value) otherwise, value representing the value computed
+
         """
         raise NotImplementedError
 
     def start(self):
-        text_lines = [ "Hello, {0}".format(self.name),
+        text_lines = [ "Hello {0},".format(self.name),
                        "Please answer the next {0} questions".format(self.num_challenges)
                      ]
         self.display_box_message("\n".join(text_lines))
-        correct_answers = 0
+        correct_answers_count = 0
+        wrong_answers = []
         num_generator = number_generator.int_pair_generator(0,self.max_value,
                                                             0,self.max_value)
-        for _ in range(self.num_challenges):
+        for id in range(self.num_challenges):
             num1, num2 = next(num_generator)
+            prefix="Question {index}:".format(index=id+1)
+            ok,info = self.handle_question(num1,num2,prefix)
+            if ok:
+                correct_answers_count += 1
+            else:
+                wrong_answers.append(info)
 
-            if self.handle_question(num1,num2):
-                correct_answers += 1
+        for info in wrong_answers:
+            print("Wrong answer: {0}".format(info))
 
         self.display_box_message(
                 "{0} scored {1} out of {2}".format(
                 self.name,
-                correct_answers,
+                correct_answers_count,
                 self.num_challenges)
         )
 
