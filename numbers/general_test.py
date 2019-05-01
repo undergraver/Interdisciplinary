@@ -10,7 +10,8 @@ class GeneralTest():
         """
         This function handles the operation between num1 and num2.
 
-        Return a (True,value) tuple if the answer is correct, (False,value) otherwise, value representing the value computed
+        Return a (True,value) tuple if the answer is correct, value representing the value
+                 (False,info) otherwise, info representing the information
 
         """
         raise NotImplementedError
